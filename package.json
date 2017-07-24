@@ -1,6 +1,6 @@
 {
 	"name": "ink-confirm-input",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Confirmation input component for Ink",
 	"license": "MIT",
 	"repository": "kevva/ink-confirm-input",
