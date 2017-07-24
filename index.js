@@ -8,32 +8,22 @@ const noop = () => {};
 class ConfirmInput extends Component {
 	constructor(props) {
 		super(props);
-		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state = {value: ''};
 	}
 
-	handleChange(value) {
-		const {checked, onChange} = this.props;
-		this.setState({value});
-		onChange(value ? /^y(es)?/i.test(value) : checked);
-	}
-
-	handleSubmit(value) {
+	handleSubmit(val) {
 		const {checked, onSubmit} = this.props;
-		this.setState({value});
-		onSubmit(value ? /^y(es)?/i.test(value) : checked);
+		onSubmit(val ? /^y(es)?/i.test(val) : checked);
 	}
 
 	render() {
-		const {placeholder} = this.props;
-		const {value} = this.state;
+		const {onChange, placeholder, value} = this.props;
 
 		return (
 			<TextInput
 				placeholder={placeholder}
 				value={value}
-				onChange={this.handleChange}
+				onChange={onChange}
 				onSubmit={this.handleSubmit}
 			/>
 		);
@@ -44,14 +34,16 @@ ConfirmInput.propTypes = {
 	checked: propTypes.bool,
 	placeholder: propTypes.string,
 	onChange: propTypes.func,
-	onSubmit: propTypes.func
+	onSubmit: propTypes.func,
+	value: propTypes.string
 };
 
 ConfirmInput.defaultProps = {
 	checked: false,
 	placeholder: '',
 	onChange: noop,
-	onSubmit: noop
+	onSubmit: noop,
+	value: ''
 };
 
 module.exports = ConfirmInput;

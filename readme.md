@@ -13,14 +13,22 @@ $ npm install ink-confirm-input
 ## Usage
 
 ```js
-const {h, render, Component, Text} = require('ink');
+const {h, render, Component} = require('ink');
 const ConfirmInput = require('ink-confirm-input');
 
 class UnicornQuestion extends Component {
 	constructor() {
 		super();
+		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state = {answer: null};
+		this.state = {
+			answer: null,
+			input: ''
+		};
+	}
+
+	handleChange(val) {
+		this.setState({input: val});
 	}
 
 	handleSubmit(val) {
@@ -33,7 +41,7 @@ class UnicornQuestion extends Component {
 	}
 
 	render() {
-		const {answer} = this.state;
+		const {answer, input} = this.state;
 
 		return (
 			<div>
@@ -41,6 +49,8 @@ class UnicornQuestion extends Component {
 
 				<ConfirmInput
 					checked
+					value={input}
+					onChange={this.handleChange}
 					onSubmit={this.handleSubmit}
 				/>
 
@@ -64,6 +74,12 @@ Type: `boolean`
 
 Whether to return `true/(yes)` or `false/(no)` by default.
 
+#### value
+
+Type: `string`
+
+Value to display in a text input.
+
 #### placeholder
 
 Type: `string`
@@ -74,13 +90,13 @@ Text to display when `value` is empty.
 
 Type: `Function`
 
-Function to call when value updates. Returns a `boolean`.
+Function to call when value updates. Returns a `string` with the input.
 
 #### onSubmit
 
 Type: `Function`
 
-Function to call when user press <kbd>Enter</kbd>. Returns a `boolean`.
+Function to call when user press <kbd>Enter</kbd>. Returns a `boolean` for the answer.
 
 
 ## License
