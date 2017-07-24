@@ -34,7 +34,8 @@
 	],
 	"dependencies": {
 		"ink-text-input": "^1.1.0",
-		"prop-types": "^15.5.10"
+		"prop-types": "^15.5.10",
+		"yn": "^2.0.0"
 	},
 	"devDependencies": {
 		"ava": "*",

@@ -2,6 +2,7 @@
 const {h, Component} = require('ink');
 const propTypes = require('prop-types');
 const TextInput = require('ink-text-input');
+const yn = require('yn');
 
 const noop = () => {};
 
@@ -13,7 +14,7 @@ class ConfirmInput extends Component {
 
 	handleSubmit(val) {
 		const {checked, onSubmit} = this.props;
-		onSubmit(val ? /^y(es)?/i.test(val) : checked);
+		onSubmit(yn(val), {default: checked});
 	}
 
 	render() {
