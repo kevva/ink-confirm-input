@@ -14,7 +14,7 @@ class ConfirmInput extends Component {
 
 	handleSubmit(val) {
 		const {checked, onSubmit} = this.props;
-		onSubmit(yn(val), {default: checked});
+		onSubmit(yn(val, {default: checked}));
 	}
 
 	render() {

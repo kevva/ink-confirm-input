@@ -54,7 +54,7 @@ class UnicornQuestion extends Component {
 					onSubmit={this.handleSubmit}
 				/>
 
-				{answer && <span>{answer}</span>}
+				{answer && answer}
 			</div>
 		);
 	}
@@ -72,7 +72,7 @@ render(<UnicornQuestion/>);
 
 Type: `boolean`
 
-Whether to return `true/(yes)` or `false/(no)` by default.
+Whether to return `true` or `false` by default.
 
 #### value
 
