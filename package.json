@@ -23,9 +23,14 @@
 		"dist.js"
 	],
 	"keywords": [
+		"boolean",
+		"checked",
 		"component",
-		"image",
-		"ink"
+		"confirm",
+		"input",
+		"ink",
+		"no",
+		"yes"
 	],
 	"dependencies": {
 		"ink-text-input": "^1.1.0",
