@@ -13,7 +13,7 @@ $ npm install ink-confirm-input
 ## Usage
 
 ```js
-const {h, render, Component} = require('ink');
+const { h, render, Component } = require('ink');
 const ConfirmInput = require('ink-confirm-input');
 
 class UnicornQuestion extends Component {
@@ -23,21 +23,20 @@ class UnicornQuestion extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state = {
 			answer: null,
-			input: ''
 		};
 	}
 
 	handleChange(val) {
-		this.setState({input: val});
+		console.log(`Change: ${val}`)
 	}
 
 	handleSubmit(val) {
-		if (!val) {
-			this.setState({answer: 'You are heartless…'});
-			return;
-		}
-
-		this.setState({answer: 'You love unicorns!'});
+        this.setState({ answer: val ? 'You love unicorns!' : 'You are heartless…' });
+        
+        setTimeout(() => {
+            // eslint-disable-line unicorn/no-process-exit
+            process.exit(0);
+        }, 200);
 	}
 
 	render() {
@@ -45,15 +44,13 @@ class UnicornQuestion extends Component {
 
 		return (
 			<div>
-				Do you like unicorns? (Y/n)
-
 				<ConfirmInput
-					checked
-					value={input}
+                    defaultValue="No"
+                    externalSeparators="Parenthesis"
+                    question="Do you like unicorns?"
 					onChange={this.handleChange}
 					onSubmit={this.handleSubmit}
 				/>
-
 				{answer && answer}
 			</div>
 		);
@@ -68,17 +65,28 @@ render(<UnicornQuestion/>);
 
 ### &lt;ConfirmInput/&gt;
 
-#### checked
-
-Type: `boolean`
-
-Whether to return `true` or `false` by default.
-
-#### value
+#### question
 
 Type: `string`
 
-Value to display in a text input.
+The message you want to show before asking the input.
+
+
+#### defaultValue
+
+Type: `enum(Yes, No)`
+
+Default: `Yes`
+
+The default value of the input. The default value is shown in UpperCase.
+
+#### externalSeparators
+
+Type: `enum(Nothing, Parenthesis, Brackets)`
+
+Default: `Brackets`
+
+The external separator that is shown around the Yes No options.
 
 #### placeholder
 
