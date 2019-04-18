@@ -1,23 +1,36 @@
-import {h, build, renderToString} from 'ink';
+import React from 'react';
+import {render} from 'ink-testing-library';
 import {spy} from 'sinon';
 import test from 'ava';
-import ConfirmInput from '.';
+import chalk from 'chalk';
+import ConfirmInput from './dist';
+
+chalk.enabled = true;
+chalk.level = 0;
 
 test('render', t => {
-	t.is(renderToString(<ConfirmInput value='Yes'/>), 'Yes');
+  const {lastFrame} = render(
+    <ConfirmInput
+      question="Some random question"
+      defaultValue="No"
+      externalSeparators="Parenthesis"
+    />
+  );
+
+  t.is(lastFrame(), 'Some random question (y/N)');
 });
 
 test('return boolean on submit', t => {
-	const setRef = spy();
-	const onChange = spy();
-	const onSubmit = spy();
+  const setRef = spy();
+  const onChange = spy();
+  const onSubmit = spy();
 
-	build(<ConfirmInput ref={setRef} onChange={onChange} onSubmit={onSubmit}/>);
+  render(<ConfirmInput ref={setRef} onChange={onChange} onSubmit={onSubmit}/>);
 
-	const ref = setRef.firstCall.args[0];
-	ref.handleSubmit('yes');
+  const ref = setRef.firstCall.args[0];
+  ref.handleSubmit('yes');
 
-	t.false(onChange.called);
-	t.true(onSubmit.calledOnce);
-	t.deepEqual(onSubmit.firstCall.args, [true]);
+  t.false(onChange.called);
+  t.true(onSubmit.calledOnce);
+  t.deepEqual(onSubmit.firstCall.args, [true]);
 });
