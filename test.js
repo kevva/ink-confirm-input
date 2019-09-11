@@ -1,23 +1,35 @@
-import {h, build, renderToString} from 'ink';
-import {spy} from 'sinon';
+import React, {useState} from 'react';
 import test from 'ava';
+import chalk from 'chalk';
+import {render} from 'ink-testing-library';
+import {spy} from 'sinon';
 import ConfirmInput from '.';
 
+const CURSOR = chalk.inverse(' ');
+const ENTER = '\r';
+
+const StatefulConfirmInput = props => {
+	const [value, setValue] = useState('');
+
+	return (
+		<ConfirmInput {...props} value={value} onChange={setValue}/>
+	);
+};
+
 test('render', t => {
-	t.is(renderToString(<ConfirmInput value="Yes"/>), 'Yes');
+	const {lastFrame} = render(<ConfirmInput value="Yes"/>);
+	t.is(lastFrame(), `Yes${CURSOR}`);
 });
 
 test('return boolean on submit', t => {
-	const setRef = spy();
-	const onChange = spy();
 	const onSubmit = spy();
+	const {lastFrame, stdin} = render(<StatefulConfirmInput onSubmit={onSubmit}/>);
 
-	build(<ConfirmInput ref={setRef} onChange={onChange} onSubmit={onSubmit}/>);
+	t.is(lastFrame(), CURSOR);
+	stdin.write('Yes');
+	t.is(lastFrame(), `Yes${CURSOR}`);
 
-	const ref = setRef.firstCall.args[0];
-	ref.handleSubmit('yes');
-
-	t.false(onChange.called);
+	stdin.write(ENTER);
 	t.true(onSubmit.calledOnce);
 	t.true(onSubmit.calledWith(true));
 });

@@ -13,52 +13,37 @@ $ npm install ink-confirm-input
 ## Usage
 
 ```js
-const {h, render, Component} = require('ink');
-const ConfirmInput = require('ink-confirm-input');
+import React, {useCallback, useState} from 'react';
+import {render, Box} from 'ink';
+import ConfirmInput from 'ink-confirm-input';
 
-class UnicornQuestion extends Component {
-	constructor() {
-		super();
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.state = {
-			answer: null,
-			input: ''
-		};
-	}
-
-	handleChange(val) {
-		this.setState({input: val});
-	}
-
-	handleSubmit(val) {
-		if (!val) {
-			this.setState({answer: 'You are heartless…'});
+const UnicornQuestion = () => {
+	const [answer, setAnswer] = useState();
+	const [value, setValue] = useState('');
+	const handleSubmit = useCallback(submitValue => {
+		if (submitValue === false) {
+			setAnswer({answer: 'You are heartless…'});
 			return;
 		}
 
-		this.setState({answer: 'You love unicorns!'});
-	}
+		setAnswer({answer: 'You love unicorns!'});
+	}, [setAnswer]);
 
-	render() {
-		const {answer, input} = this.state;
+	return (
+		<Box>
+			Do you like unicorns? (Y/n)
 
-		return (
-			<div>
-				Do you like unicorns? (Y/n)
+			<ConfirmInput
+				isChecked
+				value={value}
+				onChange={setValue}
+				onSubmit={handleSubmit}
+			/>
 
-				<ConfirmInput
-					checked
-					value={input}
-					onChange={this.handleChange}
-					onSubmit={this.handleSubmit}
-				/>
-
-				{answer && answer}
-			</div>
-		);
-	}
-}
+			{answer && answer}
+		</Box>
+	);
+};
 
 render(<UnicornQuestion/>);
 ```
@@ -70,7 +55,9 @@ render(<UnicornQuestion/>);
 
 #### Props
 
-##### checked
+`<ConfirmInput/>` accepts the same props as [`<TextInput/>`](https://github.com/vadimdemedes/ink-text-input) in addition to the ones below.
+
+##### isChecked
 
 Type: `boolean`
 

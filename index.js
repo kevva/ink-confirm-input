@@ -1,50 +1,40 @@
-'use strict';
-const {h, Component} = require('ink');
-const propTypes = require('prop-types');
-const TextInput = require('ink-text-input');
-const yn = require('yn');
+import React, {useCallback} from 'react';
+import PropTypes from 'prop-types';
+import TextInput from 'ink-text-input';
+import yn from 'yn';
 
 const noop = () => {};
 
-class ConfirmInput extends Component {
-	constructor(props) {
-		super(props);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+const ConfirmInput = ({isChecked, onChange, onSubmit, placeholder, value, ...props}) => {
+	const handleSubmit = useCallback(newValue => {
+		onSubmit(yn(newValue, {default: isChecked}));
+	}, [isChecked, onSubmit]);
 
-	handleSubmit(val) {
-		const {checked, onSubmit} = this.props;
-		onSubmit(yn(val, {default: checked}));
-	}
-
-	render() {
-		const {onChange, placeholder, value} = this.props;
-
-		return (
-			<TextInput
-				placeholder={placeholder}
-				value={value}
-				onChange={onChange}
-				onSubmit={this.handleSubmit}
-			/>
-		);
-	}
-}
+	return (
+		<TextInput
+			{...props}
+			placeholder={placeholder}
+			value={value}
+			onChange={onChange}
+			onSubmit={handleSubmit}
+		/>
+	);
+};
 
 ConfirmInput.propTypes = {
-	checked: propTypes.bool,
-	placeholder: propTypes.string,
-	onChange: propTypes.func,
-	onSubmit: propTypes.func,
-	value: propTypes.string
+	isChecked: PropTypes.bool,
+	placeholder: PropTypes.string,
+	onChange: PropTypes.func,
+	onSubmit: PropTypes.func,
+	value: PropTypes.string
 };
 
 ConfirmInput.defaultProps = {
-	checked: false,
+	isChecked: false,
 	placeholder: '',
 	onChange: noop,
 	onSubmit: noop,
 	value: ''
 };
 
-module.exports = ConfirmInput;
+export default ConfirmInput;
