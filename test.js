@@ -4,7 +4,7 @@ import test from 'ava';
 import ConfirmInput from '.';
 
 test('render', t => {
-	t.is(renderToString(<ConfirmInput value='Yes'/>), 'Yes');
+	t.is(renderToString(<ConfirmInput value="Yes"/>), 'Yes');
 });
 
 test('return boolean on submit', t => {
@@ -19,5 +19,5 @@ test('return boolean on submit', t => {
 
 	t.false(onChange.called);
 	t.true(onSubmit.calledOnce);
-	t.deepEqual(onSubmit.firstCall.args, [true]);
+	t.true(onSubmit.calledWith(true));
 });

@@ -66,39 +66,36 @@ render(<UnicornQuestion/>);
 
 ## API
 
-### &lt;ConfirmInput/&gt;
+### `<ConfirmInput/>`
 
-#### checked
+#### Props
+
+##### checked
 
 Type: `boolean`
 
 Whether to return `true` or `false` by default.
 
-#### value
+##### value
 
 Type: `string`
 
 Value to display in a text input.
 
-#### placeholder
+##### placeholder
 
 Type: `string`
 
 Text to display when `value` is empty.
 
-#### onChange
+##### onChange
 
 Type: `Function`
 
 Function to call when value updates. Returns a `string` with the input.
 
-#### onSubmit
+##### onSubmit
 
 Type: `Function`
 
 Function to call when user press <kbd>Enter</kbd>. Returns a `boolean` for the answer.
-
-
-## License
-
-MIT © [Kevin Mårtensson](https://github.com/kevva)
