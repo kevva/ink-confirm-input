@@ -22,11 +22,11 @@ const UnicornQuestion = () => {
 	const [value, setValue] = useState('');
 	const handleSubmit = useCallback(submitValue => {
 		if (submitValue === false) {
-			setAnswer({answer: 'You are heartless…'});
+			setAnswer('You are heartless…');
 			return;
 		}
 
-		setAnswer({answer: 'You love unicorns!'});
+		setAnswer('You love unicorns!');
 	}, [setAnswer]);
 
 	return (
