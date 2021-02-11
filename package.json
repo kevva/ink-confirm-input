@@ -33,7 +33,7 @@
 		"yes"
 	],
 	"dependencies": {
-		"ink-text-input": "^3.2.1",
+		"ink-text-input": "^4.0.1",
 		"prop-types": "^15.5.10",
 		"yn": "^3.1.1"
 	},
@@ -53,7 +53,7 @@
 		"xo": "^0.24.0"
 	},
 	"peerDependencies": {
-		"ink": ">=2",
+		"ink": ">=3",
 		"react": ">=16"
 	},
 	"ava": {
