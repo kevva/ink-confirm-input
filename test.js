@@ -3,6 +3,7 @@ import test from 'ava';
 import chalk from 'chalk';
 import {render} from 'ink-testing-library';
 import {spy} from 'sinon';
+import delay from 'delay';
 import ConfirmInput from '.';
 
 const CURSOR = chalk.inverse(' ');
@@ -21,13 +22,14 @@ test('render', t => {
 	t.is(lastFrame(), `Yes${CURSOR}`);
 });
 
-test('return boolean on submit', t => {
+test('return boolean on submit', async t => {
 	const onSubmit = spy();
 	const {lastFrame, stdin} = render(<StatefulConfirmInput onSubmit={onSubmit}/>);
 
 	t.is(lastFrame(), CURSOR);
 	stdin.write('Yes');
 	t.is(lastFrame(), `Yes${CURSOR}`);
+	await delay(100);
 
 	stdin.write(ENTER);
 	t.true(onSubmit.calledOnce);
